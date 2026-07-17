@@ -80,7 +80,7 @@ function main() {
 
   // 3. Define and run the report.
   // This GAQL query retrieves campaign performance data.
-  var query = "SELECT campaign.name, metrics.clicks, metrics.impressions, metrics.cost " +
+  var query = "SELECT campaign.name, metrics.clicks, metrics.impressions, metrics.cost_micros " +
               "FROM campaign " +
               "WHERE segments.date DURING LAST_7_DAYS " +
               "ORDER BY metrics.impressions DESC";
@@ -100,8 +100,9 @@ function main() {
     var campaignName = row["campaign.name"];
     var clicks = row["metrics.clicks"];
     var impressions = row["metrics.impressions"];
-    // The cost is in micro-currency (e.g., micro-dollars), so divide by 1,000,000.
-    var cost = parseFloat(row["metrics.cost"]) / 1000000;
+    // Cost is returned in micros (e.g., micro-dollars), so divide by 1,000,000.
+    // Note: the GAQL field is metrics.cost_micros; there is no metrics.cost field.
+    var cost = parseFloat(row["metrics.cost_micros"]) / 1000000;
 
     sheet.appendRow([campaignName, clicks, impressions, cost]);
   }

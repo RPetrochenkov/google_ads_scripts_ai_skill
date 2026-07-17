@@ -35,11 +35,18 @@ function main() {
 
 ### Get Ad Group for an Audience
 
+Audience IDs are composite (unique within their parent ad group), so match on
+`getAudienceId()` while iterating rather than relying on a single condition.
+
 ```javascript
 function main() {
-  var audience = AdsApp.audiences().withCondition("AudienceId = 'Your Audience ID'").get().next();
-  var adGroup = audience.getAdGroup();
-  Logger.log(adGroup.getName());
+  var audienceIterator = AdsApp.audiences().get();
+  while (audienceIterator.hasNext()) {
+    var audience = audienceIterator.next();
+    if (audience.getAudienceId() == 'YOUR_AUDIENCE_ID') {
+      Logger.log(audience.getAdGroup().getName());
+    }
+  }
 }
 ```
 

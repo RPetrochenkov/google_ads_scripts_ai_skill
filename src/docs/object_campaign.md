@@ -54,7 +54,7 @@ function main() {
 
 ```javascript
 function main() {
-  var campaign = AdsApp.campaigns().withCondition("Name = 'Your Campaign Name'").get().next();
+  var campaign = AdsApp.campaigns().withCondition("campaign.name = 'Your Campaign Name'").get().next();
   campaign.pause();
 }
 ```

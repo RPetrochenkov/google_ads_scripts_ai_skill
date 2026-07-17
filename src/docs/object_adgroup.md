@@ -51,7 +51,7 @@ function main() {
 
 ```javascript
 function main() {
-  var adGroup = AdsApp.adGroups().withCondition("Name = 'Your AdGroup Name'").get().next();
+  var adGroup = AdsApp.adGroups().withCondition("ad_group.name = 'Your AdGroup Name'").get().next();
   adGroup.pause();
 }
 ```

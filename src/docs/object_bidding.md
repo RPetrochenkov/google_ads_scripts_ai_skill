@@ -1,5 +1,45 @@
 # Bidding
 
+There are two distinct things called "bidding" in scripts:
+
+1.  **Setting a strategy on an entity** via `entity.bidding()` — e.g. `campaign.bidding()`. This is how you change how a campaign bids. Support for setting campaign bid strategies (including strategies that take a parameter like target ROAS or target impression share) was added with the new scripts experience.
+2.  **The `AdsApp.BiddingStrategy` object** — represents a *flexible, account-level (shared)* bidding strategy that can be applied across multiple campaigns and reported on.
+
+## Setting a Bidding Strategy on a Campaign
+
+Use `campaign.bidding().setStrategy(strategy)`. Strategies that need an extra
+parameter are configured with `argsBuilder()`.
+
+```javascript
+function main() {
+  var campaign = AdsApp.campaigns()
+    .withCondition("campaign.name = 'Test Campaign'")
+    .get()
+    .next();
+
+  // Simple (anonymous) strategy — no extra parameter.
+  campaign.bidding().setStrategy('TARGET_SPEND');
+
+  // Strategy with a parameter, e.g. target ROAS of 5 (500%).
+  var bidding = campaign.bidding();
+  bidding.setStrategy('MAXIMIZE_CONVERSION_VALUE',
+      bidding.argsBuilder().withTargetRoas(5));
+}
+```
+
+### Common Strategy Values
+
+*   `MANUAL_CPC` — manual cost-per-click.
+*   `MANUAL_CPM` — manual cost-per-thousand-impressions.
+*   `TARGET_SPEND` — automatically maximize clicks within budget.
+*   `MAXIMIZE_CONVERSIONS` — maximize number of conversions.
+*   `MAXIMIZE_CONVERSION_VALUE` — maximize total conversion value (pairs with `withTargetRoas()`).
+*   `TARGET_IMPRESSION_SHARE` — target a position/impression share (configured via `argsBuilder()`).
+
+Reference: [Bidding](https://developers.google.com/google-ads/scripts/docs/campaigns/bidding)
+
+## The `AdsApp.BiddingStrategy` Object (Shared Strategies)
+
 The `AdsApp.BiddingStrategy` object represents a flexible, account-level bidding strategy.
 
 ## Methods
@@ -39,7 +79,7 @@ function main() {
 
 ```javascript
 function main() {
-  var biddingStrategy = AdsApp.biddingStrategies().withCondition("Name = 'Your Bidding Strategy Name'").get().next();
+  var biddingStrategy = AdsApp.biddingStrategies().withCondition("bidding_strategy.name = 'Your Bidding Strategy Name'").get().next();
   var campaigns = biddingStrategy.campaigns().get();
   while (campaigns.hasNext()) {
     var campaign = campaigns.next();

@@ -41,7 +41,7 @@ function main() {
 
 ```javascript
 function main() {
-  var label = AdsApp.labels().withCondition("Name = 'Your Label Name'").get().next();
+  var label = AdsApp.labels().withCondition("label.name = 'Your Label Name'").get().next();
   var campaigns = label.campaigns().get();
   while (campaigns.hasNext()) {
     var campaign = campaigns.next();

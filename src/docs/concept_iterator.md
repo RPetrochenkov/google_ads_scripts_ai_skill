@@ -13,7 +13,7 @@ To get an iterator, you first need to construct a selector.
 
 ```javascript
 function main() {
-  var campaignSelector = AdsApp.campaigns().withCondition("Status = ENABLED");
+  var campaignSelector = AdsApp.campaigns().withCondition("campaign.status = ENABLED");
   var campaignIterator = campaignSelector.get();
 
   while (campaignIterator.hasNext()) {

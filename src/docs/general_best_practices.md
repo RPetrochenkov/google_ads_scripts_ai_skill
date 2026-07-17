@@ -26,3 +26,12 @@ This document summarizes the most important best practices to follow when writin
 ## 5. Google Sheets
 
 *   **Batch Spreadsheet Updates:** When writing data to a Google Sheet, it is much more efficient to write the data in a single batch rather than one cell at a time. Create a two-dimensional array of your data and write it to the sheet in a single `getRange().setValues()` call.
+
+## 6. The New Scripts Experience
+
+All new scripts run on the "new scripts experience", which is built on the Google Ads API. A few things this changes for how you write scripts:
+
+*   **Modern JavaScript (ES6) is supported.** You can use `const`, `let`, arrow functions, template literals, classes, and `for...of` loops. (Existing examples in this repo use `var`/ES5 and still work — new scripts can prefer `const`/`let`.)
+*   **Use GAQL field names in `withCondition()` and `orderBy()`.** Filter with API field names such as `campaign.status = ENABLED` rather than the legacy `Status = ENABLED`. See [concept_selector](./concept_selector.md).
+*   **Entity-count limits were removed; time limits remain.** You can process more campaigns, ad groups, and keywords in a run, but scripts still have an execution-time limit — keep queries selective and batch your writes.
+*   **Campaign bid strategies can be set from scripts,** including strategies that take a parameter (target ROAS, target impression share). See [object_bidding](./object_bidding.md).

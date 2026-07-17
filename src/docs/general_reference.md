@@ -42,3 +42,9 @@ This document provides a high-level overview of the most common objects availabl
     *   [Official Documentation](https://developers.google.com/google-ads/scripts/docs/reference/adsapp/adsapp_executioninfo)
 *   **`BulkUploads`**: Provides access to the bulk upload functionality.
     *   [Official Documentation](https://developers.google.com/google-ads/scripts/docs/features/bulk-upload)
+
+## Recent Changes & Notable Guides
+
+*   **New Scripts Experience / Migration** (GAQL field names, ES6 support): [Migration guide](https://developers.google.com/google-ads/scripts/docs/migration)
+*   **Setting Campaign Bid Strategies**: [Bidding](https://developers.google.com/google-ads/scripts/docs/campaigns/bidding)
+*   **Merchant API in scripts** (available from April 22, 2026; replaces the Content API for Shopping, which sunsets August 18, 2026): see the [Google Ads Developer Blog](https://ads-developers.googleblog.com/search/label/google_ads_scripts) for the announcement.

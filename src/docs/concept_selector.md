@@ -12,12 +12,23 @@ Selectors are used to define and retrieve a specific set of Google Ads entities.
 
 After defining your criteria by chaining these methods, you call the `.get()` method on the selector to obtain an iterator for the selected entities.
 
+## Field Names: Use GAQL (API) Names
+
+In the current ("new") scripts experience, `withCondition()` and `orderBy()` use **Google Ads API (GAQL) field names**, not the legacy AWQL column names. Names are case-sensitive and namespaced by resource:
+
+*   Campaigns: `campaign.status = ENABLED`, `campaign.name = '...'`
+*   Ad groups: `ad_group.status = ENABLED`, `ad_group.name = '...'`
+*   Keywords: `ad_group_criterion.status = ENABLED`, `ad_group_criterion.keyword.text = '...'`
+*   Metrics (require `forDateRange()`): `metrics.clicks > 100`, `metrics.impressions > 1000`
+
+Legacy AWQL conditions (e.g. `"Status = ENABLED"`) are auto-converted for backward compatibility, but prefer GAQL names — they are the documented standard and avoid conversion failures.
+
 ## Example
 
 ```javascript
 function main() {
   var campaignSelector = AdsApp.campaigns()
-    .withCondition("Status = ENABLED")
+    .withCondition("campaign.status = ENABLED")
     .forDateRange("LAST_30_DAYS")
     .orderBy("metrics.clicks DESC")
     .withLimit(10);
