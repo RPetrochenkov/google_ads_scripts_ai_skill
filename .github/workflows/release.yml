@@ -1,0 +1,34 @@
+name: Build and publish skill
+
+# Package the google-ads-scripts/ folder into a claude.ai-ready skill zip and
+# attach it to a GitHub Release whenever a version tag (vX.Y.Z) is pushed.
+on:
+  push:
+    tags:
+      - 'v*'
+
+permissions:
+  contents: write
+
+jobs:
+  release:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out the repository
+        uses: actions/checkout@v4
+
+      - name: Build the skill zip
+        # Zip only the skill folder so the archive contains a single top-level
+        # folder (google-ads-scripts/) with SKILL.md at its root — the layout
+        # claude.ai's skill importer expects. Exclude macOS cruft.
+        run: zip -r google-ads-scripts.zip google-ads-scripts -x '*.DS_Store'
+
+      - name: Verify the archive shape
+        run: |
+          unzip -l google-ads-scripts.zip
+          unzip -p google-ads-scripts.zip google-ads-scripts/SKILL.md | head -n 4
+
+      - name: Publish the zip as a Release asset
+        uses: softprops/action-gh-release@v2
+        with:
+          files: google-ads-scripts.zip

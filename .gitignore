@@ -1,2 +1,5 @@
 .idea/
 .venv/
+.DS_Store
+# Build artifact — produced by the release workflow, never committed.
+google-ads-scripts.zip
