@@ -1,51 +1,74 @@
-# google-ads-scripts (Claude skill)
+# Google Ads Scripts — Claude Skill
 
-This repository **is** the [`google-ads-scripts`](google-ads-scripts/SKILL.md)
-Claude skill: an offline reference and set of conventions that help Claude write,
-review, and debug **Google Ads Scripts** (`AdsApp` JavaScript that runs inside the
-Google Ads Scripts environment). Its single purpose is to hold and ship that skill.
+A [Claude skill](https://support.claude.com/en/articles/12512198-how-to-create-custom-skills)
+that helps Claude write, review, and debug **Google Ads Scripts** — the `AdsApp`
+JavaScript that runs inside the Google Ads *Scripts* environment.
 
-## Layout
+Out of the box, LLMs often generate Google Ads Scripts with outdated syntax
+(legacy AWQL filters, invalid fields like `metrics.cost`, pre-ES5 patterns). This
+skill gives Claude a compact, up-to-date reference for the current ("new") scripts
+experience so the code it produces actually runs.
+
+## What it does
+
+When this skill is active, Claude will:
+
+- Use **current GAQL syntax** — API field names in `withCondition()`/`orderBy()`
+  (e.g. `campaign.status = ENABLED`), `metrics.cost_micros` (not `metrics.cost`),
+  and modern ES6.
+- Know the real objects and features — campaigns, ad groups, keywords, budgets,
+  bid strategies, audiences, labels, reporting, Performance Max, MCC (manager)
+  scripts, bulk uploads, and Google Sheets export.
+- Follow safe operating habits — filter at the API level, respect execution-time
+  limits, batch writes and logging on large accounts, and confirm scope (naming
+  conventions or labels) before touching live campaigns.
+
+It ships with an offline documentation set and two worked example scripts.
+
+## Add it to Claude
+
+**On claude.ai (web/desktop):**
+
+1. Download `google-ads-scripts.zip` from the
+   [latest release](../../releases/latest).
+2. Go to **Settings → Customize → Skills → Create skill** and upload the zip.
+3. It appears as **google-ads-scripts** and activates automatically when you ask
+   about Google Ads Scripts. (Skills require a paid plan / admin enablement.)
+
+**In Claude Code (local):**
+
+Copy the `google-ads-scripts/` folder into your skills directory:
+
+```bash
+cp -r google-ads-scripts ~/.claude/skills/
+```
+
+Then just ask Claude to write or fix a Google Ads Script.
+
+## What's inside
 
 ```
-google-ads-scripts/          <- THE SKILL (the only thing that ships)
-├── SKILL.md                 <- skill instructions + frontmatter (name, description)
+google-ads-scripts/
+├── SKILL.md                 # the skill's instructions
 └── reference/
-    ├── docs/                <- Google Ads Scripts documentation (concepts, objects, features)
-    └── examples/            <- worked example scripts
-.github/workflows/release.yml <- builds + publishes the skill zip on tag push
+    ├── docs/                # concepts, objects, and features (GAQL, selectors, PMax, MCC, …)
+    └── examples/            # worked example scripts
 ```
 
-Everything at the repo root (this README, the workflow) is tooling — it is **not**
-part of the shipped skill. Only the `google-ads-scripts/` folder is packaged.
+---
 
-## Shipping the skill to claude.ai
+## About me
 
-The skill zip is built for you by GitHub Actions — you never zip anything by hand.
+I'm Roman — I work in marketing analytics and spend most of my time on paid media
+measurement and automation: attribution, cost and conversion pipelines, Google/Meta
+API integrations, GTM and server-side tracking (including CAPI).
 
-1. Push the repo to GitHub, then push a version tag:
-   ```bash
-   git tag v0.1.0
-   git push origin v0.1.0
-   ```
-2. The **Build and publish skill** workflow runs (free on all GitHub plans) and
-   attaches `google-ads-scripts.zip` to a new Release for that tag.
-3. Download that Release asset.
-4. In claude.ai: **Settings → Customize → Skills → Create skill**, and upload the
-   zip. It registers as **google-ads-scripts** (from the `name` in `SKILL.md`).
+This skill came out of my own frustration: I used to write a lot of Google Ads Scripts,
+and every AI tool was writing rubbish without this skill.
 
-The archive contains a single top-level `google-ads-scripts/` folder with
-`SKILL.md` at its root — the exact shape the claude.ai importer requires.
+- 🔗 **LinkedIn:** [Roman Petrochenkov](https://www.linkedin.com/in/rpetrochenkov/)
+- ▶️ **YouTube:** [Marketing Watch House](https://www.youtube.com/channel/UCGVixrs0am6EoF9O16C5lpQ) — Google Ads, GA4, BigQuery and automating the boring parts
 
-> Prefer no CI? The same artifact is produced locally with:
-> `zip -r google-ads-scripts.zip google-ads-scripts -x '*.DS_Store'`
-
-## Maintaining this repo
-
-- **Commits use a plain message — no `Co-Authored-By:` trailer** (including the
-  Claude one).
-- When Google Ads Scripts behavior changes, update the relevant file(s) under
-  `google-ads-scripts/reference/docs/` **and** the "Key facts" section of
-  `google-ads-scripts/SKILL.md` so the two stay in sync.
-- Keep `SKILL.md` frontmatter within limits: `name` lowercase/hyphens (≤64 chars),
-  `description` ≤200 chars.
+If this saved you time, a ⭐ on the repo helps more people find it. And come say hi on
+[LinkedIn](https://www.linkedin.com/in/rpetrochenkov/) — I like meeting people working
+on the same problems.
