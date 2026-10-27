@@ -1,3 +1,9 @@
+<p align="center">
+  <a href="https://rpetrochenkov.co.uk/?utm_source=github&utm_medium=readme&utm_campaign=google-ads-scripts-skill"><img src="assets/rp-data.svg" alt="RP Data: Roman Petrochenkov's website" height="56"></a>
+  &nbsp;&nbsp;
+  <a href="https://www.linkedin.com/in/rpetrochenkov/"><img src="assets/linkedin.svg" alt="Roman Petrochenkov on LinkedIn" height="56"></a>
+</p>
+
 # Google Ads Scripts — Claude Skill
 
 A [Claude skill](https://support.claude.com/en/articles/12512198-how-to-create-custom-skills)
@@ -5,7 +11,7 @@ that helps Claude write, review, and debug **Google Ads Scripts** — the `AdsAp
 JavaScript that runs inside the Google Ads *Scripts* environment.
 
 Out of the box, LLMs often generate Google Ads Scripts with outdated syntax
-(legacy AWQL filters, invalid fields like `metrics.cost`, pre-ES5 patterns). This
+(legacy AWQL filters, invalid fields like `metrics.cost`, pre-ES6 patterns). This
 skill gives Claude a compact, up-to-date reference for the current ("new") scripts
 experience so the code it produces actually runs.
 
@@ -55,6 +61,17 @@ google-ads-scripts/
     └── examples/            # worked example scripts
 ```
 
+## Related
+
+- **[google-ads-scripts](https://github.com/RPetrochenkov/google-ads-scripts)**: restored and
+  updated scripts from my Marketing Watch House tutorials (2019–2020), one folder per video. They were
+  written and checked against this skill, so they make good worked examples of what it produces.
+- **[Google Ads Scripts — 2026 Full Guide](https://www.youtube.com/watch?v=Vi4Yr5JCviE)**: my video
+  walkthrough of Google Ads Scripts today.
+
+Something wrong or missing in the skill?
+[Open an issue](https://github.com/RPetrochenkov/google_ads_scripts_ai_skill/issues/new).
+
 ---
 
 ## About me
@@ -66,6 +83,7 @@ API integrations, GTM and server-side tracking (including CAPI).
 This skill came out of my own frustration: I used to write a lot of Google Ads Scripts,
 and every AI tool was writing rubbish without this skill.
 
+- 🌐 **Website:** [rpetrochenkov.co.uk](https://rpetrochenkov.co.uk)
 - 🔗 **LinkedIn:** [Roman Petrochenkov](https://www.linkedin.com/in/rpetrochenkov/)
 - ▶️ **YouTube:** [Marketing Watch House](https://www.youtube.com/channel/UCGVixrs0am6EoF9O16C5lpQ) — Google Ads, GA4, BigQuery and automating the boring parts
 
